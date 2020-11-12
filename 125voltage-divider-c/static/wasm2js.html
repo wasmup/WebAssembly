@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8" />
+    <title>Voltage Divider</title>
+  </head>
+  <body>
+
+    <img src="voltage-divider.png" alt="voltage-divider">
+    <br>
+
+    <input type="button" id="buttonVin" value="Calculate"> 
+    <input type="text" id="Vin" value="5" style="text-align: right;"/> <span>[V] = Vin.value</span>
+    <br>
+    <input type="button" id="buttonVout" value="Calculate">
+    <input type="text" id="Vout" value="1.25" style="text-align: right;"/> <span>[V] = Vout.value</span>
+    <br>
+    <input type="button" id="buttonR1" value="Calculate">
+    <input type="text" id="R1" value="3300" style="text-align: right;"/> <span>[Ω] = R1.value</span>
+    <br>
+    <input type="button" id="buttonR2" value="Calculate"> 
+    <input type="text" id="R2" value="1100" style="text-align: right;"/> <span>[Ω] = R2.value</span>
+    <hr>
+<table>
+  <tr>
+    <td>P<sub>R1</sub></td><td><span id="PR1">?</span></td><td>[W]</td>
+  </tr>
+<tr>
+  <td>P<sub>R2</sub></td><td><span id="PR2">?</span></td><td>[W]</td>
+</tr>
+<tr>
+  <td>I<sub>R1</sub></td><td><span id="IR1">?</span></td><td>[A]</td>
+</tr>
+<tr>
+  <td>I<sub>short circuit</sub></td><td><span id="Isc">?</span></td><td>[A]</td>
+</tr>
+<tr>
+  <td>R<sub>Thevenin equivalent</sub></td><td><span id="RTh">?</span></td><td>[Ω]</td>
+</tr>
+</table>
+    <hr>
+    <input type="button" id="buttonCalc" value="Calculate">
+    JavaScript Calculator (<a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math" >Math help</a >):
+      <br>
+      <textarea name="jsCalc" id="jsCalc" cols="100vw" rows="5">Vin.value/R1.value</textarea> 
+      <br>
+    History: <br>
+    <textarea name="jsCalcHistory" id="jsCalcHistory" cols="100vw" rows="5">Math.trunc(120*Math.sqrt(2))</textarea> 
+
+    <script src="js/wasm2js.js"></script>
+  </body>
+</html>

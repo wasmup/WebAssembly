@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="css/main.css" />
+    <title>Go WebAssembly Calculator zipped/unzipped using Rust WebAssembly</title>
+</head>
+  <body>
+    <table>
+      <tr>
+        <td><input type="button" value="%" onclick="apnd('%')"/></td>
+        <td><input type="button" value="/" onclick="apnd('/')"/></td>
+        <td><input type="button" value="*" onclick="apnd('*')"/></td>
+        <td><input type="button" value="**" onclick="apnd('**')"/></td>
+        <td><input type="button" value="sin" onclick="bracket('Math.sin')"/></td>
+        <td><input type="button" value="cos" onclick="bracket('Math.cos')"/></td>
+        <td><input type="button" value="tan" onclick="bracket('Math.tan')"/></td>
+        <td><input type="button" value="exp" onclick="bracket('Math.exp')"/></td>
+        <td><input type="button" value="time" onclick="TimeNow()"/></td>
+        <td><input type="button" value="to hex" onclick="bigToHex()"/></td>
+        <td><input type="button" value="shift right" onclick="shiftRight()"/></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="7" onclick="apnd('7')"/></td>
+        <td><input type="button" value="8" onclick="apnd('8')"/></td>
+        <td><input type="button" value="9" onclick="apnd('9')"/></td>
+        <td><input type="button" value="**0.5" onclick="apnd('**0.5')"/></td>
+        <td><input type="button" value="asin" onclick="bracket('Math.asin')"/></td>
+        <td><input type="button" value="acos" onclick="bracket('Math.acos')"/></td>
+        <td><input type="button" value="atan" onclick="bracket('Math.atan')"/></td>
+        <td><input type="button" value="log" onclick="bracket('Math.log')"/></td>
+        <td><input type="button" value="is prime" onclick="isPrime()"/></td>
+        <td><input type="button" value="to decimal" onclick="bigToDecimal()"/></td>
+        <td><input type="button" value="shift left" onclick="shiftLeft()"/></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="4" onclick="apnd('4')"/></td>
+        <td><input type="button" value="5" onclick="apnd('5')"/></td>
+        <td><input type="button" value="6" onclick="apnd('6')"/></td>
+        <td><input type="button" value="-" onclick="apnd('-')"/></td>
+        <td><input type="button" value="asinh" onclick="bracket('Math.asinh')"/></td>
+        <td><input type="button" value="acosh" onclick="bracket('Math.acosh')"/></td>
+        <td><input type="button" value="atanh" onclick="bracket('Math.atanh')"/></td>
+        <td><input type="button" value="log10" onclick="bracket('Math.log10')"/></td>
+        <td><input type="button" value="factorial" onclick="Factorial()"/></td>
+        <td><input type="button" value="to octal" onclick="bigToOctal()"/></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="1" onclick="apnd('1')"/></td>
+        <td><input type="button" value="2" onclick="apnd('2')"/></td>
+        <td><input type="button" value="3" onclick="apnd('3')"/></td>
+        <td><input type="button" value="+" onclick="apnd('+')"/></td>
+        <td><input type="button" value="abs" onclick="bracket('Math.abs')"/></td>
+        <td><input type="button" value="ceil" onclick="bracket('Math.ceil')"/></td> 
+        <td><input type="button" value="floor" onclick="bracket('Math.floor')"/></td> 
+        <td><input type="button" value="round" onclick="bracket('Math.round')"/></td> 
+        <td><input type="button" value="console len" onclick="Length()"/></td>
+        <td><input type="button" value="to binary" onclick="bigToBinary()"/></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="0" onclick="apnd('0')"/></td>
+        <td><input type="button" value="." onclick="apnd('.')"/></td>
+        <td><input type="button" value="=" onclick="solve()"/></td>
+        <td><input type="button" value="clear" onclick="clr()"/></td>
+        <td><input type="button" value="()" onclick="bracket('')"/></td> 
+        <td><input type="button" value="random" onclick="apnd('Math.random()')"/></td> 
+        <td><input type="button" value="PI" onclick="apnd('Math.PI')"/></td> 
+        <td><input type="button" value="trunc" onclick="bracket('Math.trunc')"/></td>
+        <td><input type="button" value="clear history" onclick="clrHistory()"/></td>
+        <td><input type="button" value="bitwise not" onclick="bitwiseNot()"/></td>
+        
+      </tr>
+      <tr> 
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>number of bits:</td>
+        <td> <textarea name="bits" id="bits" cols="10" rows="1">64</textarea> </td>
+        <td><input type="button" value="=> bit cut" onclick="bitCut()"/></td>
+
+      </tr>
+    </table>
+
+    Console: 
+    <br />
+    <textarea class="vw" name="result" id="result" cols="100vw" rows="5"></textarea><br />
+    History ( <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math" >Math help</a >): <br />
+    <textarea class="vw" name="history" id="history" cols="100vw" rows="15"></textarea>
+
+    <script>
+      var d = new Date();
+      var n = d.getTime();
+      document.getElementById("result").value=n+"n";
+    </script>
+    <script src="js/wasm_exec.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

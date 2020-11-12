@@ -1,0 +1,18 @@
+[package]
+name = "rsserve"
+version = "0.1.0"
+authors = ["wasmup <authors>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[profile.release]
+opt-level = 's'  # Optimize for size.
+lto = true # Link Time Optimization (LTO)
+codegen-units = 1 #Set this to 1 to allow for maximum size reduction optimizations:
+panic = 'abort' #  removes the need for this extra unwinding code.
+
+[dependencies]
+actix-web   = "2.0.0" # Actix web is a simple, pragmatic and extremely fast web framework for Rust.
+actix-files = "0.2.1" # Static files support for actix web.
+actix-rt    = "1.0.0" # Actix runtime

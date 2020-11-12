@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="css/main.css" />
+  <title>Go WebAssembly</title>
+</head>
+
+<body>
+  Hi <br />
+  Welcome to WebAssembly. <br />
+  Give it a try.
+  <hr />
+
+  Quick start: <br />
+  <a target="_blank" href="https://github.com/wasmup/WebAssembly/tree/master/102hello-rs">Rust WebAssembly Quick
+    start</a>
+  <br />
+  <a target="_blank" href="https://github.com/wasmup/WebAssembly/tree/master/100">Go WebAssembly Quick start</a>
+  <br />
+  <a href="#end">Go to bottom of the page</a>
+  <table>
+    <tr>
+      <th>No</th>
+      <th>Title</th>
+      <th>Wasm Size</th>
+      <th>Web Link</th>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>Go WebAssembly web Console Hello from The Go Authors</td>
+      <td>2.2M</td>
+      <td> <a target="_blank" href="100/static/wasm_exec.html">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>Go WebAssembly and JavaScript web Console Hello</td>
+      <td>2.2M</td>
+      <td> <a target="_blank" href="101hello/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td>Rust WebAssembly and JavaScript HTML Hello</td>
+      <td>24K</td>
+      <td> <a target="_blank" href="102hello-rs/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>103</td>
+      <td>TinyGo WebAssembly web Console Hello</td>
+      <td>127K</td>
+      <td> <a target="_blank" href="103tinygo/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>104</td>
+      <td>Go WebAssembly web Console factorial</td>
+      <td>2.2M</td>
+      <td> <a target="_blank" href="104factorial/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>105</td>
+      <td>Go WebAssembly HTML factorial</td>
+      <td>2.2M</td>
+      <td> <a target="_blank" href="105factorial/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>106</td>
+      <td>Go WebAssembly HTML big.Int factorial</td>
+      <td>2.4M</td>
+      <td> <a target="_blank" href="106bigfact/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>107</td>
+      <td>Rust WebAssembly HTML 32-bit factorial</td>
+      <td>170</td>
+      <td> <a target="_blank" href="107factorial-rs/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>108</td>
+      <td>Rust WebAssembly wasm32-wasi factorial</td>
+      <td>170</td>
+      <td> <a target="_blank" href="108wasi-rs/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>109</td>
+      <td>Rust WebAssembly wasm-bindgen canvas</td>
+      <td>16K</td>
+      <td> <a target="_blank" href="109canvas-rs/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>110</td>
+      <td>Go WebAssembly CSS setAttribute</td>
+      <td>1.2M</td>
+      <td> <a target="_blank" href="110css/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>111</td>
+      <td>Go WebAssembly inline HTML</td>
+      <td>1.3M</td>
+      <td> <a target="_blank" href="111inline/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>112</td>
+      <td>Go WebAssembly prime numbers</td>
+      <td>2.2M</td>
+      <td> <a target="_blank" href="112primes/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>113</td>
+      <td>Go WebAssembly C JavaScript micro-benchmarking</td>
+      <td>0</td>
+      <td> <a target="_blank" href="113timing/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>114</td>
+      <td>Go WebAssembly <b>Calculator</b></td>
+      <td>2.5M</td>
+      <td> <a target="_blank" href="114calc/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>115</td>
+      <td>Go WebAssembly Calculator zipped/unzipped using Rust WebAssembly </td>
+      <td>54K+744K</td>
+      <td> <a target="_blank" href="115zipwasm/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>116</td>
+      <td>Game of Life - C# executable (GUI) x86-64 Mono/.Net assembly, for MS Windows </td>
+      <td>25K</td>
+      <td> <a target="_blank" href="116Life-cs/Life/Form1.cs">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>117</td>
+      <td>JavaScript <b>Game of Life</b></td>
+      <td>0</td>
+      <td> <a target="_blank" href="117life-js/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>118</td>
+      <td>Go WebAssembly Game of Life</td>
+      <td>2.4M</td>
+      <td> <a target="_blank" href="118life/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>119</td>
+      <td>Go WebAssembly function Call from document, JavaScrip function Call from Wasm </td>
+      <td>1.4M</td>
+      <td> <a target="_blank" href="119call/static/">Open in a new page</a> </td>
+    </tr>
+    <!-- <tr> <td>120</td> <td>Rust WebAssembly Game of Life</td> <td>1.4M</td> <td><a target="_blank" href="120life-rs/static/">Open in a new page</a></td> </tr> -->
+    <tr>
+      <td>121</td>
+      <td>Rust WebAssembly binary <b>ones' complement</b> and <b>two's complement</b> </td>
+      <td>38K</td>
+      <td> <a target="_blank" href="121binary-rs/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>122</td>
+      <td>Rust WebAssembly WebAssembly SHA1</td>
+      <td>32K</td>
+      <td> <a target="_blank" href="122sha1/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>123</td>
+      <td>Rust WebAssembly cargo-web and stdweb</td>
+      <td>63K</td>
+      <td> <a target="_blank" href="123stdweb-rs-js/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>124</td>
+      <td>Rust WebAssembly <b>Voltage Divider</b></td>
+      <td>274</td>
+      <td> <a target="_blank" href="124voltage-divider/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>125</td>
+      <td>C WebAssembly <b>Voltage Divider</b></td>
+      <td>369 </td>
+      <td> <a target="_blank" href="125voltage-divider-c/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>125</td>
+      <td>WebAssembly to JavaScript <b>Voltage Divider</b></td>
+      <td>0</td>
+      <td> <a target="_blank" href="125voltage-divider-c/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>126</td>
+      <td>WASI CLI</td>
+      <td>65K</td>
+      <td> <a target="_blank" href="126wasi-hello/README.md">README</a> </td>
+    </tr>
+    <tr>
+      <td>127</td>
+      <td>WASI file copy</td>
+      <td>72K</td>
+      <td> <a target="_blank" href="127wasi-sys/README.md">README</a> </td>
+    </tr>
+    <tr>
+      <td>128</td>
+      <td>Rust WebAssembly Morse code</td>
+      <td>83K</td>
+      <td> <a target="_blank" href="128morse/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>129</td>
+      <td>Rust WebAssembly Wasm-bindgen <b>big-fib big-fact</b> </td>
+      <td>35K</td>
+      <td> <a target="_blank" href="129bindgen/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>130</td>
+      <td>Rust WebAssembly Wasm-bindgen <b>rand</b> </td>
+      <td>32K</td>
+      <td> <a target="_blank" href="130rand/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>131</td>
+      <td>Rust WebAssembly <b>common factors probability</b> </td>
+      <td>62K</td>
+      <td> <a target="_blank" href="131common-factors-probability/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>132</td>
+      <td>Rust WebAssembly common factors probability <b>micro-benchmarking</b> </td>
+      <td>0</td>
+      <td> <a target="_blank" href="132common-factors-probability-timing/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>133</td>
+      <td>Rust WebAssembly calc π </td>
+      <td>38K</td>
+      <td> <a target="_blank" href="133pi/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>134</td>
+      <td>Rust WebAssembly insertion sort </td>
+      <td>40K</td>
+      <td> <a target="_blank" href="134insertion-sort/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>135</td>
+      <td>WebAssembly JS </td>
+      <td>71</td>
+      <td> <a target="_blank" href="135wasm-js/static/">Open in a new page</a> </td>
+    </tr>
+    <tr>
+      <td>136</td>
+      <td>Rust WebAssembly <b>common factors probability</b></td>
+      <td>75K</td>
+      <td> <a target="_blank" href="136common-factors-probability/static/">Open in a new page</a> </td>
+    </tr>
+
+  </table>
+
+  <a href="#">Go to top of the page</a>
+  <hr />
+  <a target="_blank" href="https://github.com/wasmup/WebAssembly">Home - GitHub</a><br />
+  <hr />
+  <a name="end" id="end"></a>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

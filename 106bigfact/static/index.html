@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Go WebAssembly HTML big.Int factorial</title>
+</head>
+<body>
+  <input type="text" id="text1" value="1000" />
+  <input type="button" id="button1" value="Factorial" />
+  <div id="div1">Result</div>
+  <hr/>
+  The number of milliseconds since 1970/01/01 (Page load):
+  <div id="div2"></div>
+  <hr/>
+  The number of milliseconds since 1970/01/01 (Go WebAssembly main):
+  <div id="div3"></div>
+  <div id="div4"></div>
+  <hr/>
+  <div id="div0"></div>
+  
+  <script src="js/wasm_exec.js"></script>
+  <script src="js/main.js"></script>  
+</body>
+</html>

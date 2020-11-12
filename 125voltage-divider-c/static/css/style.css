@@ -1,0 +1,26 @@
+textarea {
+    width: 100%;
+    -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+       -moz-box-sizing: border-box; /* FF1+ */
+            box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+}
+
+table {
+    border-collapse: collapse;
+  }
+  
+  td, th {
+    border: solid silver;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even){background-color: lightgreen;}
+  
+  tr:hover {background-color: silver;}
+  
+  th {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: left;
+  }
+  

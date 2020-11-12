@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8" />
+    <title>Hello from Rust</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>min:</td>
+        <td><input type="number" id="numberMin" value="1" /> </td>
+        <td> max:</td>
+        <td><input type="number" id="numberMax" value="1000000" /> </td>
+        <td><input type="button" id="buttonRand" value="Rand(min, max)"/></td>
+      </tr>
+
+      <tr>
+        <td>a:</td>
+        <td><input type="number" id="numberA" value="27" /></td>
+        <td>b:</td>
+        <td><input type="number" id="numberB" value="81" /> </td>
+        <td><input type="button" id="buttonAB" value="a b factors"/></td>
+      </tr>
+    </table>
+     
+     <textarea name="textareaRand" id="textareaRand" cols="100vw" rows="10"></textarea> 
+      <hr>
+      number of iterations: <input type="number" id="numberIterations" min="1" max="1000000" value="100000" /> 
+      <input type="button" id="buttonN" value="Run simulation"/>
+      <input type="button" id="buttonPrime" value="What is the probability that they have all prime common factors"/>
+      <textarea name="textareaIterations" id="textareaIterations" cols="100vw" rows="4"></textarea> 
+      <hr>
+      number of iterations: <input type="number" id="numberIterations2" min="1" max="1000000" value="100" /> 
+      <input type="button" id="buttonN2" value="Show commaon factors"/>
+      <textarea name="textareaIterations2" id="textareaIterations2" cols="100vw" rows="10"></textarea> 
+
+    <script src="js/main.js" type="module"></script>
+  </body>
+</html>

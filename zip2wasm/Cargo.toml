@@ -1,0 +1,18 @@
+[package]
+name = "zip2wasm"
+version = "0.1.0"
+authors = ["wasmup authors"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+lto = true
+opt-level = 3 # speed
+
+[dependencies]
+wasm-bindgen = "0.2.55" # Easy support for interacting between JS and Rust.
+flate2 = "1.0.13"

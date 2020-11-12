@@ -1,0 +1,21 @@
+table {
+    background-color: burlywood;
+    border-spacing: 0;
+    width: 100%;
+}
+
+td {
+    border: 1px solid #444;
+    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+}
+
+.off {
+    background-color: transparent;
+}
+
+.on {
+    background-color: green;
+    border-radius: 3px;
+}

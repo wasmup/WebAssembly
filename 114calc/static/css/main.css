@@ -1,0 +1,23 @@
+
+body {
+  height: 100vh;
+  /* background-image: linear-gradient( rgba(159, 155, 209, 0.678), rgba(141, 206, 129, 0.678) ); */
+}
+
+.vw{
+  box-sizing: border-box;  
+  width: 100vw;
+}
+
+input[type="button"] {
+  background-color: silver;
+  width: 100%;
+}
+/* 
+input[type="text"] {
+  background-color: white;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
+} */

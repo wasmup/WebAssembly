@@ -1,0 +1,7 @@
+*.wat
+*.lock
+*.ll
+0/
+*.o
+.vscode/
+**/.vscode/

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    Hi
+    <hr>
+    <!-- Call Wasm function document.setTitle from document -->
+    <input type="text" id="text1" value="Call Wasm from document">
+    <input type="button" value="Set doc title" onclick="setTitle(text1.value)">
+    <hr>
+    
+    <!-- Call Wasm function window.add from document -->
+    a: <input type="number" id="numberA" value="10">
+    b: <input type="number" id="numberB" value="20">
+    <input type="button" value="a+b" onclick="numberC.value = add(Number(numberA.value), Number(numberB.value));">
+    <br>
+    a+b: <input type="number" id="numberC" value="0">
+    <hr>
+
+    <div id="div1" name="div1">Hi</div>
+
+    <script src="js/wasm_exec.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

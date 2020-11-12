@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Go WebAssembly C JavaScript Timing</title>
+</head>
+<body>
+    <br>
+    Timing 
+    <a target="_blank" href="/wasmup/113timing/main.go">Go</a> vs Go WebAssembly vs 
+    <a target="_blank" href="/wasmup/113timing/c/main.c">C</a> vs 
+    <a target="_blank" href="/wasmup/113timing/js/main.js">JavaScript</a>  to find the bigest 64-bit prime number 18446744073709551557 
+<br>
+<br>
+<br>
+<table>
+<tr> <td> Cores </td><td> Go    </td><td> Go WebAssembly</td><td> C    </td><td>JavaScript   </td> </tr>
+<tr> <td> 8     </td><td> 5.12s </td><td> 37.5s </td>        <td>      </td><td>     </td> </tr>
+<tr> <td> 1     </td><td> 23.3s </td><td> 34.5s </td>        <td> 21.9s</td><td>628s </td> </tr>
+</table>
+
+</body>
+</html>
