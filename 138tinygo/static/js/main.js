@@ -11,7 +11,6 @@ WebAssembly.instantiateStreaming(fetch('js/main.wasm'), go.importObject)
         var inst = result.instance;
         go.run(inst);
         inst = WebAssembly.instantiate(mod, go.importObject); // reset instance
-        console.log("JavaScript: Hello.");
     })
     .catch((err) => {
         console.error(err);

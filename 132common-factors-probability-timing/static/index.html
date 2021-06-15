@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,28 +8,33 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Rust WebAssembly Timing</title>
 </head>
+
 <body>
-<table>
-<tr> <td> random number pairs</td>
-     <td> Cores </td>
-     <td> C++ </td>
-     <td> Rust </td>
-     <td> Rust WebAssembly</td>
-     <td>Go</td> 
-     <td>Go WebAssembly</td> 
-</tr>
+    <table>
+        <tr>
+            <td> random number pairs</td>
+            <td> Cores </td>
+            <td> C++ </td>
+            <td> Rust </td>
+            <td> Rust WebAssembly</td>
+            <td>Go</td>
+            <td>Go WebAssembly</td>
+            <td>TinyGo WebAssembly</td>
+        </tr>
 
 
-<tr> 
-    <td>1_000_000</td> 
-    <td> 1     </td>
-    <td> 7.560s</td>
-    <td> 7.380s </td>
-    <td> 9.042s </td> 
-    <td> 9.362s</td> 
-    <td>38.933s</td> 
-</tr>
+        <tr>
+            <td>1_000_000</td>
+            <td> 1 </td>
+            <td> 7.560s</td>
+            <td> 7.559s </td>
+            <td> 9.042s </td>
+            <td> 9.362s</td>
+            <td>31.823s</td>
+            <td>17.975s</td>
+        </tr>
 
-</table>
+    </table>
 </body>
+
 </html>

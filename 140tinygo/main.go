@@ -5,21 +5,41 @@ import (
 	"math"
 	"math/rand"
 	"sort"
+	"syscall/js"
 	"time"
+)
+
+var (
+	window   = js.Global()
+	document = window.Get("document")
 )
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
+
+	div := document.Call("createElement", "div")
+	div.Set("id", "div1")
+
+	body := document.Call("getElementsByTagName", "body").Index(0)
+	body.Call("appendChild", div)
+
+	div1 := document.Call("getElementById", "div1")
+
 	var min, max uint32 = 1, 1_000_000
 	t0 := time.Now()
-	fmt.Println(countPrimeFactor(min, max, 1_000_000))
-	fmt.Println(time.Since(t0))
-	/*
-		common factor probability = 39.0957% for 1_000_000 pairs of random numbers.
-		common factors probability = 1 - 6/π² = 39.2073%
-		all prime common factors probability = 27.4286%
-		9.656603651s
-	*/
+	s := countPrimeFactor(min, max, 1_000_000)
+	s += "\n" + time.Since(t0).String()
+	div1.Set("innerText", s)
+
+	select {}
+}
+
+func factorial(n int32) int32 {
+	var f int32 = 1
+	for i := int32(2); i <= n; i++ {
+		f *= i
+	}
+	return f
 }
 
 func rnd(min, max uint32) uint32 {

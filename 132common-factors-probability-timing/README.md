@@ -4,21 +4,17 @@
 ```sh
 cargo clean
 RUSTFLAGS='-C link-arg=-s' cargo build --release
+# Finished release [optimized] target(s) in 12.96s
 ll /dev/shm/target/release/common-factors-probability-timing 
-# 243_976
+# 288_968
 time /dev/shm/target/release/common-factors-probability-timing
-# common factor probability = 39.2280% for 1_000_000 pairs of random numbers.
+# common factor probability = 39.2230% for 1_000_000 pairs of random numbers.
 # common factors probability = 1 - 6/π² = 39.2073%
-# all prime common factors probability = 27.5149%
-# real    0m7.380s
-# user    0m7.375s
-# sys     0m0.004s
+# all prime common factors probability = 27.5286%
 
-# Wasm:
-# common factor probability = 39.1228% for 1_000_000 pairs of random numbers.
-# common factors probability = 1 - 6/π² = 39.2073%
-# all prime common factors probability = 27.4648%
-# Simulation time = 9226ms
+# real    0m8.495s
+# user    0m8.456s
+# sys     0m0.004s
 
 RUSTFLAGS='-C link-arg=-s' cargo build --release --target x86_64-unknown-linux-musl
 file /dev/shm/target/x86_64-unknown-linux-musl/release/common-factors-probability-timing
@@ -37,31 +33,45 @@ time go run .
 # common factor probability = 39.2507% for 1_000_000 pairs of random numbers.
 # common factors probability = 1 - 6/π² = 39.2073%
 # all prime common factors probability = 27.5514%
-# real    0m9.362s
-# user    0m9.611s
-# sys     0m0.177s
+# real    0m9.940s
+# user    0m10.550s
+# sys     0m0.314s
+
+# cp $GOROOT/misc/wasm/wasm_exec.html ./static/js/
+cp $GOROOT/misc/wasm/wasm_exec.js ./static/js/
 time GOOS=js GOARCH=wasm go build -o static/js/main.wasm  
+ls -lh  static/js/main.wasm  
+# 2.2M
 time node static/js/wasm_exec.js static/js/main.wasm 
-# common factor probability = 39.1570% for 1_000_000 pairs of random numbers.
+# common factor probability = 39.0957% for 1_000_000 pairs of random numbers.
 # common factors probability = 1 - 6/π² = 39.2073%
-# all prime common factors probability = 27.4726%
-# real    0m39.045s
-# user    0m40.543s
-# sys     0m0.100s
-ll static/js/main.wasm
-# 2_384_488
-wasm-gc static/js/main.wasm
-ll static/js/main.wasm
-# 2_384_250
-time node static/js/wasm_exec.js static/js/main.wasm 
-# common factor probability = 39.2729% for 1_000_000 pairs of random numbers.
+# all prime common factors probability = 27.4218%
+# 30.920858112s
+
+# real    0m31.823s
+# user    0m33.684s
+# sys     0m0.149s
+# wasm-gc static/js/main.wasm
+
+time tinygo build -o static/js/main.wasm -target wasm -no-debug .
+# real    0m3.314s
+# user    0m3.593s
+# sys     0m0.192s
+ls -lh ./static/js/*.wasm
+    # 114K
+cp /usr/local/tinygo/targets/wasm_exec.js static/js/
+time node static/js/wasm_exec.js static/js/main.wasm
+# common factor probability = 39.1889% for 1_000_000 pairs of random numbers.
 # common factors probability = 1 - 6/π² = 39.2073%
-# all prime common factors probability = 27.5075%
-# real    0m38.933s
-# user    0m40.359s
-# sys     0m0.100s
+# all prime common factors probability = 27.4320%
+# 17.858201856s
 
+# real    0m17.975s
+# user    0m18.061s
+# sys     0m0.017s
 
+cd ../Cpp
+# sudo apt-get install clang-tools-10
 clang++ -s -O3 main.cpp -o main && time ./main
 
 # common factors probability = 39.19 for 1_000_000 pairs of random numbers.
