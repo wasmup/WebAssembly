@@ -5,38 +5,40 @@
 // This file has been modified for use by the TinyGo compiler.
 
 (() => {
-	// Map web browser API and Node.js API to a single common API (preferring web standards over Node.js API).
-	const isNodeJS = typeof process !== "undefined";
-	if (isNodeJS) {
-		global.require = require;
-		global.fs = require("fs");
+	// Map multiple JavaScript environments to a single common API,
+	// preferring web standards over Node.js API.
+	//
+	// Environments considered:
+	// - Browsers
+	// - Node.js
+	// - Electron
+	// - Parcel
 
-		const nodeCrypto = require("crypto");
-		global.crypto = {
-			getRandomValues(b) {
-				nodeCrypto.randomFillSync(b);
-			},
-		};
-
-		global.performance = {
-			now() {
-				const [sec, nsec] = process.hrtime();
-				return sec * 1000 + nsec / 1000000;
-			},
-		};
-
-		const util = require("util");
-		global.TextEncoder = util.TextEncoder;
-		global.TextDecoder = util.TextDecoder;
+	if (typeof global !== "undefined") {
+		// global already exists
+	} else if (typeof window !== "undefined") {
+		window.global = window;
+	} else if (typeof self !== "undefined") {
+		self.global = self;
 	} else {
-		if (typeof window !== "undefined") {
-			window.global = window;
-		} else if (typeof self !== "undefined") {
-			self.global = self;
-		} else {
-			throw new Error("cannot export Go (neither window nor self is defined)");
-		}
+		throw new Error("cannot export Go (neither global, window nor self is defined)");
+	}
 
+	if (!global.require && typeof require !== "undefined") {
+		global.require = require;
+	}
+
+	if (!global.fs && global.require) {
+		global.fs = require("fs");
+	}
+
+	const enosys = () => {
+		const err = new Error("not implemented");
+		err.code = "ENOSYS";
+		return err;
+	};
+
+	if (!global.fs) {
 		let outputBuf = "";
 		global.fs = {
 			constants: { O_WRONLY: -1, O_RDWR: -1, O_CREAT: -1, O_TRUNC: -1, O_APPEND: -1, O_EXCL: -1 }, // unused
@@ -51,21 +53,80 @@
 			},
 			write(fd, buf, offset, length, position, callback) {
 				if (offset !== 0 || length !== buf.length || position !== null) {
-					throw new Error("not implemented");
+					callback(enosys());
+					return;
 				}
 				const n = this.writeSync(fd, buf);
 				callback(null, n);
 			},
-			open(path, flags, mode, callback) {
-				const err = new Error("not implemented");
-				err.code = "ENOSYS";
-				callback(err);
-			},
-			fsync(fd, callback) {
-				callback(null);
+			chmod(path, mode, callback) { callback(enosys()); },
+			chown(path, uid, gid, callback) { callback(enosys()); },
+			close(fd, callback) { callback(enosys()); },
+			fchmod(fd, mode, callback) { callback(enosys()); },
+			fchown(fd, uid, gid, callback) { callback(enosys()); },
+			fstat(fd, callback) { callback(enosys()); },
+			fsync(fd, callback) { callback(null); },
+			ftruncate(fd, length, callback) { callback(enosys()); },
+			lchown(path, uid, gid, callback) { callback(enosys()); },
+			link(path, link, callback) { callback(enosys()); },
+			lstat(path, callback) { callback(enosys()); },
+			mkdir(path, perm, callback) { callback(enosys()); },
+			open(path, flags, mode, callback) { callback(enosys()); },
+			read(fd, buffer, offset, length, position, callback) { callback(enosys()); },
+			readdir(path, callback) { callback(enosys()); },
+			readlink(path, callback) { callback(enosys()); },
+			rename(from, to, callback) { callback(enosys()); },
+			rmdir(path, callback) { callback(enosys()); },
+			stat(path, callback) { callback(enosys()); },
+			symlink(path, link, callback) { callback(enosys()); },
+			truncate(path, length, callback) { callback(enosys()); },
+			unlink(path, callback) { callback(enosys()); },
+			utimes(path, atime, mtime, callback) { callback(enosys()); },
+		};
+	}
+
+	if (!global.process) {
+		global.process = {
+			getuid() { return -1; },
+			getgid() { return -1; },
+			geteuid() { return -1; },
+			getegid() { return -1; },
+			getgroups() { throw enosys(); },
+			pid: -1,
+			ppid: -1,
+			umask() { throw enosys(); },
+			cwd() { throw enosys(); },
+			chdir() { throw enosys(); },
+		}
+	}
+
+	if (!global.crypto) {
+		const nodeCrypto = require("crypto");
+		global.crypto = {
+			getRandomValues(b) {
+				nodeCrypto.randomFillSync(b);
 			},
 		};
 	}
+
+	if (!global.performance) {
+		global.performance = {
+			now() {
+				const [sec, nsec] = process.hrtime();
+				return sec * 1000 + nsec / 1000000;
+			},
+		};
+	}
+
+	if (!global.TextEncoder) {
+		global.TextEncoder = require("util").TextEncoder;
+	}
+
+	if (!global.TextDecoder) {
+		global.TextDecoder = require("util").TextDecoder;
+	}
+
+	// End of polyfills for common API.
 
 	const encoder = new TextEncoder("utf-8");
 	const decoder = new TextDecoder("utf-8");
@@ -141,26 +202,31 @@
 						return;
 				}
 
-				let ref = this._refs.get(v);
-				if (ref === undefined) {
-					ref = this._values.length;
-					this._values.push(v);
-					this._refs.set(v, ref);
+				let id = this._ids.get(v);
+				if (id === undefined) {
+					id = this._idPool.pop();
+					if (id === undefined) {
+						id = this._values.length;
+					}
+					this._values[id] = v;
+					this._goRefCounts[id] = 0;
+					this._ids.set(v, id);
 				}
-				let typeFlag = 0;
+				this._goRefCounts[id]++;
+				let typeFlag = 1;
 				switch (typeof v) {
 					case "string":
-						typeFlag = 1;
-						break;
-					case "symbol":
 						typeFlag = 2;
 						break;
-					case "function":
+					case "symbol":
 						typeFlag = 3;
+						break;
+					case "function":
+						typeFlag = 4;
 						break;
 				}
 				mem().setUint32(addr + 4, nanHead | typeFlag, true);
-				mem().setUint32(addr, ref, true);
+				mem().setUint32(addr, id, true);
 			}
 
 			const loadSlice = (array, len, cap) => {
@@ -181,31 +247,46 @@
 
 			const timeOrigin = Date.now() - performance.now();
 			this.importObject = {
-				env: {
-					io_get_stdout: function () {
-						return 1;
-					},
-
-					resource_write: function (fd, ptr, len) {
+				wasi_snapshot_preview1: {
+					// https://github.com/WebAssembly/WASI/blob/main/phases/snapshot/docs.md#fd_write
+					fd_write: function(fd, iovs_ptr, iovs_len, nwritten_ptr) {
+						let nwritten = 0;
 						if (fd == 1) {
-							for (let i = 0; i < len; i++) {
-								let c = mem().getUint8(ptr + i);
-								if (c == 13) { // CR
-									// ignore
-								} else if (c == 10) { // LF
-									// write line
-									let line = decoder.decode(new Uint8Array(logLine));
-									logLine = [];
-									console.log(line);
-								} else {
-									logLine.push(c);
+							for (let iovs_i=0; iovs_i<iovs_len;iovs_i++) {
+								let iov_ptr = iovs_ptr+iovs_i*8; // assuming wasm32
+								let ptr = mem().getUint32(iov_ptr + 0, true);
+								let len = mem().getUint32(iov_ptr + 4, true);
+								for (let i=0; i<len; i++) {
+									let c = mem().getUint8(ptr+i);
+									if (c == 13) { // CR
+										// ignore
+									} else if (c == 10) { // LF
+										// write line
+										let line = decoder.decode(new Uint8Array(logLine));
+										logLine = [];
+										console.log(line);
+									} else {
+										logLine.push(c);
+									}
 								}
 							}
 						} else {
 							console.error('invalid file descriptor:', fd);
 						}
+						mem().setUint32(nwritten_ptr, nwritten, true);
+						return 0;
 					},
-
+					"proc_exit": (code) => {
+						if (global.process) {
+							// Node.js
+							process.exit(code);
+						} else {
+							// Can't exit in a browser.
+							throw 'trying to exit with code ' + code;
+						}
+					},
+				},
+				env: {
 					// func ticks() float64
 					"runtime.ticks": () => {
 						return timeOrigin + performance.now();
@@ -215,6 +296,13 @@
 					"runtime.sleepTicks": (timeout) => {
 						// Do not sleep, only reactivate scheduler after the given timeout.
 						setTimeout(this._inst.exports.go_scheduler, timeout);
+					},
+
+					// func finalizeRef(v ref)
+					"syscall/js.finalizeRef": (sp) => {
+						// Note: TinyGo does not support finalizers so this should never be
+						// called.
+						console.error('syscall/js.finalizeRef not implemented');
 					},
 
 					// func stringVal(value string) ref
@@ -237,6 +325,13 @@
 						const p = loadString(p_ptr, p_len);
 						const x = loadValue(x_addr);
 						Reflect.set(v, p, x);
+					},
+
+					// func valueDelete(v ref, p string)
+					"syscall/js.valueDelete": (v_addr, p_ptr, p_len) => {
+						const v = loadValue(v_addr);
+						const p = loadString(p_ptr, p_len);
+						Reflect.deleteProperty(v, p);
 					},
 
 					// func valueIndex(v ref, i int) ref
@@ -286,7 +381,7 @@
 							mem().setUint8(ret_addr + 8, 1);
 						} catch (err) {
 							storeValue(ret_addr, err);
-							mem().setUint8(ret_addr + 8, 0);
+							mem().setUint8(ret_addr+ 8, 0);
 						}
 					},
 
@@ -310,28 +405,64 @@
 					},
 
 					// func valueInstanceOf(v ref, t ref) bool
-					//"syscall/js.valueInstanceOf": (sp) => {
-					//	mem().setUint8(sp + 24, loadValue(sp + 8) instanceof loadValue(sp + 16));
-					//},
+					"syscall/js.valueInstanceOf": (v_addr, t_addr) => {
+ 						return loadValue(v_addr) instanceof loadValue(t_addr);
+					},
+
+					// func copyBytesToGo(dst []byte, src ref) (int, bool)
+					"syscall/js.copyBytesToGo": (ret_addr, dest_addr, dest_len, dest_cap, source_addr) => {
+						let num_bytes_copied_addr = ret_addr;
+						let returned_status_addr = ret_addr + 4; // Address of returned boolean status variable
+
+						const dst = loadSlice(dest_addr, dest_len);
+						const src = loadValue(source_addr);
+						if (!(src instanceof Uint8Array)) {
+							mem().setUint8(returned_status_addr, 0); // Return "not ok" status
+							return;
+						}
+						const toCopy = src.subarray(0, dst.length);
+						dst.set(toCopy);
+						setInt64(num_bytes_copied_addr, toCopy.length);
+						mem().setUint8(returned_status_addr, 1); // Return "ok" status
+					},
+
+					// copyBytesToJS(dst ref, src []byte) (int, bool)
+					// Originally copied from upstream Go project, then modified:
+					//   https://github.com/golang/go/blob/3f995c3f3b43033013013e6c7ccc93a9b1411ca9/misc/wasm/wasm_exec.js#L404-L416
+					"syscall/js.copyBytesToJS": (ret_addr, dest_addr, source_addr, source_len, source_cap) => {
+						let num_bytes_copied_addr = ret_addr;
+						let returned_status_addr = ret_addr + 4; // Address of returned boolean status variable
+
+						const dst = loadValue(dest_addr);
+						const src = loadSlice(source_addr, source_len);
+						if (!(dst instanceof Uint8Array)) {
+							mem().setUint8(returned_status_addr, 0); // Return "not ok" status
+							return;
+						}
+						const toCopy = src.subarray(0, dst.length);
+						dst.set(toCopy);
+						setInt64(num_bytes_copied_addr, toCopy.length);
+						mem().setUint8(returned_status_addr, 1); // Return "ok" status
+					},
 				}
 			};
 		}
 
 		async run(instance) {
 			this._inst = instance;
-			this._values = [ // TODO: garbage collection
+			this._values = [ // JS values that Go currently has references to, indexed by reference id
 				NaN,
 				0,
 				null,
 				true,
 				false,
 				global,
-				this._inst.exports.memory,
 				this,
 			];
-			this._refs = new Map();
-			this._callbackShutdown = false;
-			this.exited = false;
+			this._goRefCounts = []; // number of references that Go has to a JS value, indexed by reference id
+			this._ids = new Map();  // mapping from JS values to reference ids
+			this._idPool = [];      // unused ids that have been garbage collected
+			this.exited = false;    // whether the Go program has exited
 
 			const mem = new DataView(this._inst.exports.memory.buffer)
 
@@ -344,7 +475,7 @@
 						setTimeout(resolve, 0); // make sure it is asynchronous
 					};
 				});
-				this._inst.exports.cwa_main();
+				this._inst.exports._start();
 				if (this.exited) {
 					break;
 				}
@@ -373,23 +504,24 @@
 		}
 	}
 
-	if (isNodeJS) {
+	if (
+		global.require &&
+		global.require.main === module &&
+		global.process &&
+		global.process.versions &&
+		!global.process.versions.electron
+	) {
 		if (process.argv.length != 3) {
-			process.stderr.write("usage: go_js_wasm_exec [wasm binary] [arguments]\n");
+			console.error("usage: go_js_wasm_exec [wasm binary] [arguments]");
 			process.exit(1);
 		}
 
 		const go = new Go();
 		WebAssembly.instantiate(fs.readFileSync(process.argv[2]), go.importObject).then((result) => {
-			process.on("exit", (code) => { // Node.js exits if no callback is pending
-				if (code === 0 && !go.exited) {
-					// deadlock, make Go print error and stack traces
-					go._callbackShutdown = true;
-				}
-			});
 			return go.run(result.instance);
 		}).catch((err) => {
-			throw err;
+			console.error(err);
+			process.exit(1);
 		});
 	}
 })();
