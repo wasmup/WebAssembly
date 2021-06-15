@@ -11,7 +11,7 @@ ls -lh ./static/*.wasm
 # GOOS=js GOARCH=wasm go build -ldflags "-s" -o ./static/test.wasm
 
 # Run the static file server at background:
-go run web/main.go &
+go run web/main.go
 # Now open the web page using your web browser at: http://127.0.0.1:8080/static/wasm_exec.html
 
 firefox http://127.0.0.1:8080/static/wasm_exec.html

@@ -1,6 +1,7 @@
 # Simple static file server
 
 ```sh
+go get
 go install -ldflags=-s
 file $(which goserve)
 
