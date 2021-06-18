@@ -16,3 +16,4 @@ function changeBg() {
 }
 
 window.scrollTo(0, document.body.scrollHeight);
+console.log("done");
