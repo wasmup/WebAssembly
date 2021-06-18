@@ -14,3 +14,5 @@ function changeBg() {
     document.body.style.backgroundColor = v;
     document.getElementById("colorHex").textContent = v;
 }
+
+window.scrollTo(0, document.body.scrollHeight);
