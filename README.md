@@ -3,7 +3,10 @@
 Try it online: [WebAssembly is here.](https://wasmup.github.io/WebAssembly/)
 
 [Rust WebAssembly Quick start](https://github.com/wasmup/WebAssembly/tree/master/102hello-rs)  
+
 [Go WebAssembly Quick start](https://github.com/wasmup/WebAssembly/tree/master/100)
+
+<img src="go100.png">
 
 <img src="Wasm-vs-JS-Life-stopped-mem-usage.png">
 
@@ -109,6 +112,8 @@ Designing in room for evolutionary development
 ---
 
 See also:  
+[Go WebAssembly](https://github.com/golang/go/wiki/WebAssembly)  
+
 [WebAssembly JavaScript Interface](https://webassembly.github.io/spec/js-api/index.html)  
 [Understanding the JS API](https://webassembly.org/getting-started/js-api/)  
 [Roadmap](https://webassembly.org/roadmap/)  
@@ -129,7 +134,6 @@ See also:
 [WebAssembly Specifications](https://webassembly.github.io/spec/)  
 [WebAssembly Reference Manual](https://github.com/sunfishcode/wasm-reference-manual/blob/master/WebAssembly.md)  
 [developer.mozilla](https://developer.mozilla.org/en-US/docs/WebAssembly)  
-[Go WebAssembly](https://github.com/golang/go/wiki/WebAssembly)  
 [awesome-wasm](https://github.com/mbasso/awesome-wasm)  
 [Rust and WebAssembly](https://rustwasm.github.io/)  
 [Features to add after the MVP](https://github.com/WebAssembly/design/blob/master/FutureFeatures.md)  

@@ -1,4 +1,7 @@
 all:
+	cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" ./static/wasm_exec.js
+	cp "$(go env GOROOT)/misc/wasm/wasm_exec.html" ./static/wasm_exec.html
+	
 # GOOS=js GOARCH=wasm go build -o ./static/test.wasm
 	GOOS=js GOARCH=wasm go build -ldflags "-s -w" -o ./static/test.wasm
 # Run when main.go changed:
