@@ -11,9 +11,9 @@ import (
 )
 
 func main() {
-	addr := flag.String("addr", "0.0.0.0:8080", `"IP:Port" or just ":Port" e.g.: ":8080"`)
+	addr := flag.String("addr", "0.0.0.0:8181", `"IP:Port" or just ":Port" e.g.: ":8181"`)
 	flag.Parse()
-	http.HandleFunc("/favicon.ico", favicon)
+	// http.HandleFunc("/favicon.ico", favicon)
 	http.HandleFunc("/", fileserver)
 
 	log.Println("Open:", *addr)
