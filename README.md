@@ -8,6 +8,8 @@ Try it online: [WebAssembly is here.](https://wasmup.github.io/WebAssembly/)
 
 <img src="go100.png">
 
+<img src="go101.png">
+
 <img src="Wasm-vs-JS-Life-stopped-mem-usage.png">
 
 ---
